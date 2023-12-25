@@ -1,19 +1,5 @@
 "use client";
 import * as React from "react";
-import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
-  File,
-  Inbox,
-  MessagesSquare,
-  PenBox,
-  Search,
-  Send,
-  ShoppingCart,
-  Trash2,
-  Users2,
-} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -23,7 +9,8 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { PropsWithChildren } from "react";
-import { Nav } from "@/components/ui/nav";
+import { ChatNav } from "@/app/chat/components/chat-layout/chat-nav";
+import ChatNavHeader from "@/app/chat/components/chat-layout/chat-nav-header";
 
 interface MainLayout extends PropsWithChildren {
   defaultLayout: number[] | undefined;
@@ -65,92 +52,9 @@ const MainLayout: React.FC<MainLayout> = ({
           isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out"
         )}
       >
-        <div
-          className={cn(
-            "flex h-[52px] items-center justify-center",
-            isCollapsed ? "h-[52px]" : "px-2"
-          )}
-        >
-          ChatGemini
-        </div>
+        <ChatNavHeader />
         <Separator />
-        <Nav
-          isCollapsed={isCollapsed}
-          links={[
-            {
-              title: "Inbox",
-              label: "128",
-              icon: Inbox,
-              variant: "default",
-            },
-            {
-              title: "Drafts",
-              label: "9",
-              icon: File,
-              variant: "ghost",
-            },
-            {
-              title: "Sent",
-              label: "",
-              icon: Send,
-              variant: "ghost",
-            },
-            {
-              title: "Junk",
-              label: "23",
-              icon: ArchiveX,
-              variant: "ghost",
-            },
-            {
-              title: "Trash",
-              label: "",
-              icon: Trash2,
-              variant: "ghost",
-            },
-            {
-              title: "Archive",
-              label: "",
-              icon: Archive,
-              variant: "ghost",
-            },
-          ]}
-        />
-        <Separator />
-        <Nav
-          isCollapsed={isCollapsed}
-          links={[
-            {
-              title: "Social",
-              label: "972",
-              icon: Users2,
-              variant: "ghost",
-            },
-            {
-              title: "Updates",
-              label: "342",
-              icon: AlertCircle,
-              variant: "ghost",
-            },
-            {
-              title: "Forums",
-              label: "128",
-              icon: MessagesSquare,
-              variant: "ghost",
-            },
-            {
-              title: "Shopping",
-              label: "8",
-              icon: ShoppingCart,
-              variant: "ghost",
-            },
-            {
-              title: "Promotions",
-              label: "21",
-              icon: Archive,
-              variant: "ghost",
-            },
-          ]}
-        />
+        <ChatNav />
       </ResizablePanel>
       <ResizableHandle withHandle />
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
