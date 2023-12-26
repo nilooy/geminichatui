@@ -6,19 +6,25 @@ import { cn } from "@/lib/utils";
 import { CodeBlock } from "./codeblock";
 import { MemoizedReactMarkdown } from "./markdown";
 import { Icon } from "@/components/ui/icons";
-import Image from "next/image";
 import React from "react";
+import { TypeAnimation } from "react-type-animation";
 
 export interface ChatMessageProps {
   message: Message;
-  chatbotLogo?: string;
   children?: React.ReactNode;
 }
 
+const AnimateText = ({ text, cursor }) => (
+  // <TypeAnimation cursor={cursor} sequence={[text]} speed={99} repeat={false} />
+  <p className="relative before:absolute before:inset-0 before:animate-typewriter">
+    {text}
+  </p>
+);
+
 export function ChatMessage({
   message,
-  chatbotLogo,
   children,
+  responseIsStarted,
   ...props
 }: ChatMessageProps) {
   const isUser = message.role === "user";
@@ -69,24 +75,23 @@ export function ChatMessage({
             remarkPlugins={[remarkGfm, remarkMath]}
             components={{
               p({ children }) {
-                return <p className="mb-2 last:mb-0">{children}</p>;
+                return (
+                  <div className={"mb-2 last:mb-0"}>
+                    {isUser ? (
+                      <p>{children}</p>
+                    ) : (
+                      <AnimateText
+                        cursor={!!responseIsStarted}
+                        text={children}
+                      ></AnimateText>
+                    )}
+                  </div>
+                );
               },
               code({ node, inline, className, children, ...props }) {
-                if (children.length) {
-                  if (children[0] == "▍") {
-                    return (
-                      <span className="mt-1 cursor-default animate-pulse">
-                        ▍
-                      </span>
-                    );
-                  }
-
-                  children[0] = (children[0] as string).replace("`▍`", "▍");
-                }
-
                 const match = /language-(\w+)/.exec(className || "");
 
-                if (inline) {
+                if (inline || !match) {
                   return (
                     <code className={className} {...props}>
                       {children}

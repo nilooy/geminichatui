@@ -1,4 +1,4 @@
-import { Database } from "@nozbe/watermelondb";
+import { Database, Q } from "@nozbe/watermelondb";
 import { Conversations } from "@/model/Conversations";
 
 export class ConversationController {
@@ -31,8 +31,7 @@ export class ConversationController {
   // Read conversations for a chat
   async getConversationsByChat(chatId: string): Promise<Conversations[]> {
     return await this.conversationCollection
-      .query()
-      .where("chat_id", chatId)
+      .query(Q.where("chat_id", chatId), Q.sortBy("created_at"))
       .fetch();
   }
 

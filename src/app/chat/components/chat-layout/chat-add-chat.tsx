@@ -11,6 +11,7 @@ import { Plus } from "lucide-react";
 import { FolderController } from "@/lib/folders/controller";
 import { useDatabase } from "@nozbe/watermelondb/react";
 import { ChatController } from "@/lib/chats/controller";
+import { useRouter } from "next/navigation";
 
 const AddChat = () => {
   const [open, setOpen] = useState(false);
@@ -20,6 +21,7 @@ const AddChat = () => {
 
   const chatController = new ChatController(database);
   const folderController = new FolderController(database);
+  const { push } = useRouter();
 
   const handleAddChat = async (e) => {
     e.preventDefault();
@@ -27,10 +29,12 @@ const AddChat = () => {
       const defaultFolder =
         await folderController.createDefaultFolderIfNotExists();
 
-      console.log({ id: defaultFolder.id });
-
-      await chatController.createChat(chatName || "New Chat", defaultFolder);
+      const chat = await chatController.createChat(
+        chatName || "New Chat",
+        defaultFolder
+      );
       setOpen(false);
+      push(`/chat/${defaultFolder.id}/${chat.id}`);
     } catch (e) {
       console.log(e);
     }

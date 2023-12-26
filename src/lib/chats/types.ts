@@ -1,6 +1,12 @@
 export enum GeminiChatRole {
   USER = "user",
-  MODEL = "model",
+  ASSISTANT = "assistant",
+  WELCOME = "welcome",
+}
+
+export enum ChatType {
+  TEXT = "text",
+  IMAGE = "image",
 }
 
 export interface GeminiChatCompletionRequestMessage {
@@ -13,5 +19,6 @@ export type ChatMessage = {
   createdAt?: Date;
   content: string;
   role: GeminiChatRole;
+  type: ChatType;
   name?: string;
 };

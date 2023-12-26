@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { ChatList } from "./chat-list";
 import { ChatPanel } from "./chat-panel";
 import { ChatScrollAnchor } from "./chat-scroll-anchor";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery } from "@supabase-cache-helpers/postgrest-swr";
 import {
   convesationLogToInitialMessages,
@@ -18,6 +18,10 @@ import { Button } from "@/components/ui/button";
 import LoadingDots from "@/components/ui/loading-dots";
 import { ChatMessage } from "./chat-message";
 import { toast } from "sonner";
+import { ConversationController } from "@/lib/conversations/controller";
+import { useDatabase } from "@nozbe/watermelondb/react";
+import { ChatType, GeminiChatRole } from "@/lib/chats/types";
+import { useParams, useSearchParams } from "next/navigation";
 
 export interface ChatProps extends React.ComponentProps<"div"> {
   initialMessages?: Message[];
@@ -26,7 +30,6 @@ export interface ChatProps extends React.ComponentProps<"div"> {
   chatContainerClass?: string;
   welcome_message?: string;
   suggested_message?: string[];
-  chatbotLogo?: string;
   resetOnIncrement?: number;
 }
 
@@ -37,28 +40,29 @@ export default function ChatUi({
   chatContainerClass,
   welcome_message,
   suggested_message = [],
-  chatbotLogo,
   conversationId,
 }: ChatProps) {
   const chatArea = useRef<HTMLDivElement | null>(null);
+  const { chat_id, folder_id } = useParams();
 
-  // const { supabase } = useSupabaseAuth();
-  //
-  // const { data: conversations = [], isLoading: isDataLoading } = useQuery(
-  //   supabase
-  //     .from("conversations")
-  //     .select()
-  //     .eq("id", conversationId || "")
-  //     .order("created_at", { ascending: true }),
-  //   {
-  //     revalidateOnFocus: false,
-  //     revalidateOnReconnect: false,
-  //   }
-  // );
-  const conversations = [];
+  const [conversations, setConversations] = useState([]);
   const isDataLoading = false;
 
   const [responseIsStarted, setResponseIsStarted] = React.useState(false);
+
+  const database = useDatabase();
+  const conversationController = new ConversationController(database);
+
+  useEffect(() => {
+    const getConversations = async () => {
+      const data = await conversationController.getConversationsByChat(chat_id);
+      if (data?.length) setConversations(data);
+    };
+
+    if (database && chat_id) {
+      getConversations();
+    }
+  }, [database, chat_id]);
 
   const {
     messages = [],
@@ -69,7 +73,7 @@ export default function ChatUi({
     input,
     setInput,
   } = useChat({
-    api: "/api/chatbots/message",
+    api: `/chat/${folder_id}/${chat_id}/ai`,
     id: conversationId,
     body: {
       conversation_id: conversationId,
@@ -83,22 +87,36 @@ export default function ChatUi({
             : "Something went wrong"
         );
       } else {
-        setResponseIsStarted(true);
+        handleSuccessResponse();
       }
     },
-    // onFinish() {},
+    async onFinish(message) {
+      setResponseIsStarted(false);
+      console.log({ message });
+      await saveMessage(message.content);
+    },
+    onError() {
+      setResponseIsStarted(false);
+    },
     initialMessages: convesationLogToInitialMessages(
       conversations,
       welcome_message
     ) as Message[],
   });
 
-  // set response is complete to false when the loading state changes
-  useEffect(() => {
-    if (!isLoading) {
-      setResponseIsStarted(false);
-    }
-  }, [isLoading]);
+  const handleSuccessResponse = () => {
+    setInput("");
+    setResponseIsStarted(true);
+  };
+
+  const saveMessage = useCallback(async (message) => {
+    await conversationController.createConversation(
+      chat_id,
+      ChatType.TEXT,
+      GeminiChatRole.ASSISTANT,
+      message
+    );
+  }, []);
 
   // FIXME:
   useEffect(() => {
@@ -126,18 +144,20 @@ export default function ChatUi({
           <div
             className={cn("w-full overflow-y-auto", chatContainerClass || "")}
           >
-            <ChatList chatbotLogo={chatbotLogo} messages={messages} />
+            <ChatList messages={messages} />
             <ChatScrollAnchor area={chatArea} trackVisibility={isLoading} />
           </div>
         )}
         {isLoading && !responseIsStarted && (
           <ChatMessage
             message={{ role: "assistant", content: "", id: "loading" }}
+            responseIsStarted={responseIsStarted}
           >
             <LoadingDots className="!w-2 !h-2" />
           </ChatMessage>
         )}
       </div>
+      <Skeleton className="w-[70%] h-[70px] rounded-2xl self-end" />
       {!!suggested_message?.length && (
         <div className="w-full overflow-x-auto pt-2 no-scrollbar border-t">
           <div className="flex px-2 justify-start gap-3 flex-nowrap">
@@ -149,9 +169,8 @@ export default function ChatUi({
                 key={"suggested_message-" + idx.toString()}
                 onClick={async () => {
                   await append({
-                    id,
                     content: item,
-                    role: "user",
+                    role: GeminiChatRole.USER,
                   });
                 }}
               >
@@ -163,8 +182,9 @@ export default function ChatUi({
       )}
 
       <ChatPanel
-        id={id}
+        chat_id={chat_id}
         isLoading={isLoading}
+        responseIsStarted={responseIsStarted}
         stop={stop}
         append={append}
         reload={reload}

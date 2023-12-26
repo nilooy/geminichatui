@@ -3,6 +3,7 @@ import {
   GeminiChatCompletionRequestMessage,
   GeminiChatRole,
 } from "@/lib/chats/types";
+import { Conversation } from "@/db/types";
 
 export const convesationLogToMessages = (
   conv: Pick<Conversation, "speaker" | "entry">[] | null
@@ -13,14 +14,14 @@ export const convesationLogToMessages = (
   })) as GeminiChatCompletionRequestMessage[];
 
 export const convesationLogToInitialMessages = (
-  conv: Pick<Conversation, "speaker" | "entry" | "created_at" | "id">[] | null,
+  conv: Conversation[] | null,
   welcomeMessage?: string
-): ChatMessage[] => {
+) => {
   const msgs = welcomeMessage
     ? [
         {
           id: "welcome",
-          role: GeminiChatRole.MODEL,
+          role: GeminiChatRole.WELCOME,
           content: welcomeMessage,
         },
       ]
@@ -30,9 +31,9 @@ export const convesationLogToInitialMessages = (
     ...msgs,
     ...((conv || []).map((entry) => ({
       id: entry.id,
-      createdAt: entry.created_at ? new Date(entry.created_at) : undefined,
-      role: entry.speaker,
-      content: entry.entry,
+      createdAt: entry.createdAt ? new Date(entry.createdAt) : undefined,
+      role: entry.role,
+      content: entry.content,
     })) as ChatMessage[]),
   ];
 };

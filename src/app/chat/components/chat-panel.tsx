@@ -1,6 +1,9 @@
 import { type UseChatHelpers } from "ai/react";
 
 import { PromptForm } from "./prompt-form";
+import { ChatType, GeminiChatRole } from "@/lib/chats/types";
+import { ConversationController } from "@/lib/conversations/controller";
+import { useDatabase } from "@nozbe/watermelondb/react";
 
 export interface ChatPanelProps
   extends Pick<
@@ -18,8 +21,9 @@ export interface ChatPanelProps
 }
 
 export function ChatPanel({
-  id,
+  chat_id,
   isLoading,
+  responseIsStarted,
   stop,
   append,
   reload,
@@ -28,13 +32,22 @@ export function ChatPanel({
   messages,
   chatArea,
 }: ChatPanelProps) {
+  const database = useDatabase();
+  const conversationController = new ConversationController(database);
+
   return (
     <div>
       <div className="mx-auto sm:max-w-2xl sm:px-4">
         <PromptForm
+          responseIsStarted={responseIsStarted}
           onSubmit={async (value) => {
+            await conversationController.createConversation(
+              chat_id,
+              ChatType.TEXT,
+              GeminiChatRole.USER,
+              value
+            );
             await append({
-              id,
               content: value,
               role: "user",
             });

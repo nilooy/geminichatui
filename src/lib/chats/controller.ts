@@ -14,9 +14,7 @@ export class ChatController {
   // Create a new chat
   async createChat(name: string, folder?: string) {
     return await this.database.write(async () => {
-      console.log({ chatCollection: this.chatCollection });
       return this.chatCollection.create((chat) => {
-        console.log({ ss: chat });
         chat.name = name;
         chat.folder.set(folder);
       });
