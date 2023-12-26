@@ -41,6 +41,15 @@ export class ChatController {
     });
   }
 
+  async moveToFolder(chatId: string, folder: string) {
+    const chat = await this.chatCollection.find(chatId);
+    await this.database.write(async () => {
+      await chat.update((chat) => {
+        chat.folder.set(folder);
+      });
+    });
+  }
+
   // Delete a chat
   async deleteChat(chatId: string) {
     const chat = await this.chatCollection.find(chatId);

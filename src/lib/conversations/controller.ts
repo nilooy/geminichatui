@@ -28,9 +28,17 @@ export class ConversationController {
     });
   }
 
+  async getLastConversationsByChat(chatId: string): Promise<Conversations[]> {
+    return (
+      await this.conversationCollection
+        .query(Q.where("chat_id", chatId), Q.sortBy("created_at"), Q.take(1))
+        .fetch()
+    )?.[0];
+  }
+
   // Read conversations for a chat
   async getConversationsByChat(chatId: string): Promise<Conversations[]> {
-    return await this.conversationCollection
+    return this.conversationCollection
       .query(Q.where("chat_id", chatId), Q.sortBy("created_at"))
       .fetch();
   }
