@@ -4,14 +4,11 @@
     <h4 color="green">Offline first chat ui for Gemini</h4>
     <p>Made with ❤️ by <a target="_blank" href="https://twitter.com/nil_ooy">@nilooy 🧑‍💻</a></p>
 
+     <h4"><a target="_blank" href="https://geminichatui.vercel.app/chat">✨ Live Here ✨</a></h4>
 
 </div>
 
-#### [Live Here](http://localhost:3000)
-
-
 ![GeminiArea](https://github.com/nilooy/geminichatui/assets/32486682/dfde7c9a-7201-4a95-adb9-4cedbd45006e)
-
 
 ## Run Locally
 
@@ -57,6 +54,7 @@ it's a pretty new tool, Lots of room for improvement, feel free to contribute.
 
 ## Roadmap
 
+[] Add Gemini Vision
 [] Add Folder and chat name edit
 [] Add Vercel postgres db support
 [] Add Vercel postgres db support
