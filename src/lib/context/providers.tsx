@@ -5,6 +5,7 @@ import { Database } from "@nozbe/watermelondb";
 import { DatabaseProvider } from "@nozbe/watermelondb/DatabaseProvider";
 import { DbOberserverProvider } from "@/lib/context/db-observer";
 import LoadingScreen from "@/components/loading-screen";
+import Script from "next/script";
 
 const Providers: React.FC<PropsWithChildren> = ({ children }) => {
   const [database, setDatabase] = useState(null);
@@ -45,6 +46,14 @@ const Providers: React.FC<PropsWithChildren> = ({ children }) => {
     initDB();
   }, []);
 
+  const publicUrl =
+    process.env.NEXT_PUBLIC_URL && new URL(process.env.NEXT_PUBLIC_URL);
+
+  const plausibleDomain =
+    publicUrl &&
+    process.env.NEXT_PUBLIC_PLAUSIBLE_SCRIPT_PATH &&
+    publicUrl.host;
+
   return (
     <TooltipProvider>
       {database ? (
@@ -54,6 +63,11 @@ const Providers: React.FC<PropsWithChildren> = ({ children }) => {
       ) : (
         <LoadingScreen />
       )}
+      <Script
+        defer
+        data-domain={plausibleDomain}
+        src={process.env.NEXT_PUBLIC_PLAUSIBLE_SCRIPT_PATH}
+      ></Script>
     </TooltipProvider>
   );
 };

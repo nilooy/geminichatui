@@ -61,6 +61,17 @@ it's a pretty new tool, Lots of room for improvement, feel free to contribute.
 [] Save flowcharts on localStorage
 [] Animated Flowchart Generation (exportable as video)
 
+## Enable Analytics (You can use Google Analytics, but I'm using plausible analytics)
+
+- Add this to your `.env.local` file
+
+```shell
+# your app url, eg. https://www.gemchat.com
+NEXT_PUBLIC_URL=
+# your plausible script url, (self hosted or managed)
+NEXT_PUBLIC_PLAUSIBLE_SCRIPT_PATH=
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
