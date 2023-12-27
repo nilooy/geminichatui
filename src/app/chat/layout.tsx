@@ -60,12 +60,6 @@ const MainLayout: React.FC<MainLayout> = ({
       <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
         {children}
       </ResizablePanel>
-      {/*<ResizableHandle withHandle />*/}
-      {/*<ResizablePanel defaultSize={defaultLayout[2]}>*/}
-      {/*    <MailDisplay*/}
-      {/*        mail={mails.find((item) => item.id === mail.selected) || null}*/}
-      {/*    />*/}
-      {/*</ResizablePanel>*/}
     </ResizablePanelGroup>
   );
 };

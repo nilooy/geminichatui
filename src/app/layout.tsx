@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Providers from "@/lib/context/providers";
 import { Toaster } from "@/components/ui/sonner";
 import { CONFIG } from "@/config";
+import Social from "@/components/social";
 
 export const metadata: Metadata = {
   title: CONFIG.metaData.title,
@@ -51,6 +52,7 @@ export default function RootLayout({
       >
         <Providers>{children}</Providers>
         <Toaster />
+        <Social />
       </body>
     </html>
   );
