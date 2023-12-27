@@ -20,7 +20,9 @@
 
 This project is built with the following technologies:
 
-![Group 6](https://github.com/nilooy/geminichatui/assets/32486682/1dc105e9-6609-45e7-9723-cbda1bb62766)
+<p align="center">
+ <img align="center" width="600" src="https://github.com/nilooy/geminichatui/assets/32486682/1dc105e9-6609-45e7-9723-cbda1bb62766" alt="Gemini Chat logo" />
+</p>
 
 
 
