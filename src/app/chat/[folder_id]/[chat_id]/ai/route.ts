@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { GoogleGenerativeAIStream, StreamingTextResponse, Message } from "ai";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GeminiChatRole } from "@/lib/chats/types";
+import { CONFIG } from "@/config";
 
 export const runtime = "edge";
 
@@ -30,7 +31,7 @@ export async function POST(request: Request) {
       .getGenerativeModel({
         model: "gemini-pro",
         generationConfig: {
-          maxOutputTokens: 12000,
+          ...CONFIG.geminiAI,
         },
       })
       .generateContentStream(buildGoogleGenAIPrompt(messages));

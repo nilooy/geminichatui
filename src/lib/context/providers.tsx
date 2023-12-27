@@ -1,9 +1,10 @@
 "use client";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { PropsWithChildren, useEffect, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import { Database } from "@nozbe/watermelondb";
 import { DatabaseProvider } from "@nozbe/watermelondb/DatabaseProvider";
 import { DbOberserverProvider } from "@/lib/context/db-observer";
+import LoadingScreen from "@/components/loading-screen";
 
 const Providers: React.FC<PropsWithChildren> = ({ children }) => {
   const [database, setDatabase] = useState(null);
@@ -51,7 +52,7 @@ const Providers: React.FC<PropsWithChildren> = ({ children }) => {
           <DbOberserverProvider>{children}</DbOberserverProvider>
         </DatabaseProvider>
       ) : (
-        <p>Loading database...</p>
+        <LoadingScreen />
       )}
     </TooltipProvider>
   );

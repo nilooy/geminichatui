@@ -46,7 +46,6 @@ export default function ChatUi({
   const { chat_id, folder_id } = useParams();
 
   const [conversations, setConversations] = useState([]);
-  console.log({ conversations, ss: 2 });
   const isDataLoading = false;
 
   const [responseIsStarted, setResponseIsStarted] = React.useState(false);
@@ -165,10 +164,17 @@ export default function ChatUi({
               <Button
                 variant="outline"
                 title="Click to ask this"
-                className="text-[10px] px-2 py-1 h-auto rounded-2xl flex-shrink-0"
+                className="h-auto rounded-2xl flex-shrink-0 opacity-70"
                 key={"suggested_message-" + idx.toString()}
                 onClick={async () => {
+                  const conv = await conversationController.createConversation(
+                    chat_id,
+                    ChatType.TEXT,
+                    GeminiChatRole.USER,
+                    item
+                  );
                   await append({
+                    id: conv.id,
                     content: item,
                     role: GeminiChatRole.USER,
                   });

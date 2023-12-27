@@ -30,7 +30,7 @@ const AddChat = () => {
         await folderController.createDefaultFolderIfNotExists();
 
       const chat = await chatController.createChat(
-        chatName || "New Chat",
+        chatName || "Untitled Chat",
         defaultFolder
       );
       setOpen(false);

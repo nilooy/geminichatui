@@ -126,7 +126,7 @@ export function ChatMessage({
             })}
           </small>
         )}
-        <CopyButton text={message.content} />
+        {!isUser && <CopyButton text={message.content} />}
       </div>
     </div>
   );

@@ -38,8 +38,6 @@ export class FolderController {
       Q.where("name", DEFAULT_FOLDER_NAME)
     );
 
-    console.log({ defaultFolder });
-
     if (!defaultFolder?.length) return this.createFolder(DEFAULT_FOLDER_NAME);
 
     return defaultFolder?.[0];

@@ -1,30 +1,29 @@
 "use client";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo } from "react";
 import { ChatController } from "@/lib/chats/controller";
 import { FolderController } from "@/lib/folders/controller";
 import { useDatabase } from "@nozbe/watermelondb/hooks";
 import { useRouter } from "next/navigation";
 import { useEffectOnce } from "usehooks-ts";
+import LoadingDots from "@/components/ui/loading-dots";
+import Logo from "@/components/logo";
+import LoadingScreen from "@/components/loading-screen";
 
 const Page = () => {
   const database = useDatabase();
-  const [loading, setLoading] = useState(false);
   const chatController = new ChatController(database);
   const folderController = new FolderController(database);
   const { push } = useRouter();
 
   useEffectOnce(() => {
     const getDefaultChat = async () => {
-      setLoading(true);
       let defaultChatId = "";
       const defaultFolder =
         await folderController.createDefaultFolderIfNotExists();
       const chats = await defaultFolder.chats.fetch();
-      console.log({ loading });
-
       if (!chats?.length) {
         const defaultChat = await chatController.createChat(
-          "New Chat",
+          "Untitled Chat",
           defaultFolder
         );
         defaultChatId = defaultChat.id;
@@ -36,11 +35,7 @@ const Page = () => {
     getDefaultChat();
   });
 
-  return (
-    <div className="text-3xl font-black flex justify-center items-center h-screen">
-      <p>Loading</p>
-    </div>
-  );
+  return <LoadingScreen />;
 };
 
 export default memo(Page);
