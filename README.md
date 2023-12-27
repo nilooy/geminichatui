@@ -1,34 +1,17 @@
 <div align="center">
-    <img src="public/logo.svg" alt="Gemini Chat logo" />
+    <a target="_blank" href="https://geminichatui.vercel.app/">
+    <img width="400" src="public/logo.svg" alt="Gemini Chat logo" />
+        </a>
         </br></br>
     <h4 color="green">Offline first chat ui for Gemini</h4>
     <p>Made with ❤️ by <a target="_blank" href="https://twitter.com/nil_ooy">@nilooy 🧑‍💻</a></p>
-
-     <h4"><a target="_blank" href="https://geminichatui.vercel.app/chat">✨ Live Here ✨</a></h4>
-
 </div>
 
-![GeminiArea](https://github.com/nilooy/geminichatui/assets/32486682/dfde7c9a-7201-4a95-adb9-4cedbd45006e)
+<h1 align="center"><a target="_blank" href="https://geminichatui.vercel.app/chat">✨ Live Here ✨</a></h1>
 
-## Run Locally
-
-First, run the development server:
-
-- Create `.env.local` file or rename `env.sample` to `env.local` and
-- add the `GEMINI_API_KEY`
-
-- Install all the dependecies
-- 
-```bash
-yarn
-```
-- Run the server
-- 
-```bash
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<p align="center">
+ <img align="center" width="900" src="https://github.com/nilooy/geminichatui/assets/32486682/dfde7c9a-7201-4a95-adb9-4cedbd45006e" alt="Gemini Chat logo" />
+</p>
 
 
 ## Built With
@@ -37,7 +20,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 This project is built with the following technologies:
 
-![Group 6](https://github.com/nilooy/geminichatui/assets/32486682/1dc105e9-6609-45e7-9723-cbda1bb62766)
+<p align="center">
+ <img align="center" width="600" src="https://github.com/nilooy/geminichatui/assets/32486682/1dc105e9-6609-45e7-9723-cbda1bb62766" alt="Gemini Chat logo" />
+</p>
 
 
 
@@ -49,17 +34,38 @@ This project is built with the following technologies:
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
+
+## Run Locally
+
+First, run the development server:
+
+- Create `.env.local` file or rename `env.sample` to `env.local` and
+- add the `GEMINI_API_KEY`
+
+- Install all the dependecies
+  
+```bash
+yarn
+```
+- Run the server
+  
+```bash
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
 ## Contribution
 it's a pretty new tool, Lots of room for improvement, feel free to contribute.
 
 ## Roadmap
 
-[] Add Gemini Vision
-[] Add Folder and chat name edit
-[] Add Vercel postgres db support
-[] Add Vercel postgres db support
-[] Save flowcharts on localStorage
-[] Animated Flowchart Generation (exportable as video)
+- [ ] Add Gemini Vision
+- [ ] Add Folder and chat name edit
+- [ ] Add Vercel postgres db support
+- [ ] Add Vercel postgres db support
+- [ ] Save flowcharts on localStorage
+- [ ] Animated Flowchart Generation (exportable as video)
 
 ## Enable Analytics (You can use Google Analytics, but I'm using plausible analytics)
 
