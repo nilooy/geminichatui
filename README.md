@@ -1,24 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+    <img src="public/brand/logo.png" alt="Gemini Chat logo" />
+        </br></br>
+    <h4 color="green">Offline first chat ui for Gemini</h4>
+    <p>Made with ❤️ by <a target="_blank" href="https://twitter.com/nil_ooy">@nilooy 🧑‍💻</a></p>
 
-## Getting Started
+</div>
+
+#### [Live Here](http://localhost:3000)
+
+## Run Locally
 
 First, run the development server:
 
+Create `.env.local` file or rename `env.sample` to `env.local` and
+add the
+- GEMINI_API_KEY
+
+Install all the dependecies
 ```bash
-npm run dev
-# or
+yarn
+```
+Run the server
+```bash
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Built With
+
+## Tech Stack
+
+This project is built with the following technologies:
+
+- ![Next.js](https://simpleicons.org/icons/next-dot-js.svg) **Next.js** - A React framework for building server-side
+- ![shadcnui](https://simpleicons.org/icons/shadcnui.svg) **shadcn/ui** - A Minimalistic UI Library
+- ![Tailwindcss](https://simpleicons.org/icons/tailwindcss.svg) **Tailwindcss** - A utility-first CSS framework
+- ![WatermelonDB](https://raw.githubusercontent.com/Nozbe/WatermelonDB/master/assets/logo.png) **WatermelonDB** - Offline First Database
+
+
+## Deploy on Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/nilooy/geminichatui/&env=GEMINI_API_KEY&envDescription=Google%20API%20Key%20for%20Gemini%20Chat%20UI&envLink=https://makersuite.google.com/app/apikey&project-name=gemini-chat&repository-name=gemini-chat&demo-title=Gemini%20Chat%20&demo-description=Offline%20First%20Chat%20UI%20for%20Gemini%20Ai%20Model.)
+
+[//]: # ([![Deploy with Vercel]&#40;https://vercel.com/button&#41;]&#40;https://vercel.com/new/clone?repository-url=https://github.com/nilooy/geminichatui/&env=GEMINI_API_KEY&envDescription=Google%20API%20Key%20for%20Gemini%20Chat%20UI&envLink=https://makersuite.google.com/app/apikey&project-name=gemini-chat&repository-name=gemini-chat&demo-title=Gemini%20Chat%20&demo-description=Minimal%20web%20UI%20for%20Gemini%20Pro.&demo-url=https%3A%2F%2Fgeminiprochat.com&demo-image=https%3A%2F%2Fgeminiprochat.com%2Ficon.svg&#41;)
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Contribution
+it's a pretty new tool, Lots of room for improvement, feel free to contribute.
+
+## Roadmap
+
+[] Add Folder and chat name edit
+[] Add Vercel postgres db support
+[] Add Vercel postgres db support
+[] Save flowcharts on localStorage
+[] Animated Flowchart Generation (exportable as video)
 
 ## Learn More
 
@@ -26,11 +65,7 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 
+## Updates will be posted here
+[![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/nil_ooy.svg?style=social&label=Follow%20%40nil_ooy)](https://twitter.com/nil_ooy)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
