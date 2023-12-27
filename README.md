@@ -1,26 +1,32 @@
 <div align="center">
-    <img src="public/brand/logo.png" alt="Gemini Chat logo" />
+    <img src="public/logo.svg" alt="Gemini Chat logo" />
         </br></br>
     <h4 color="green">Offline first chat ui for Gemini</h4>
     <p>Made with ❤️ by <a target="_blank" href="https://twitter.com/nil_ooy">@nilooy 🧑‍💻</a></p>
+
 
 </div>
 
 #### [Live Here](http://localhost:3000)
 
+
+![GeminiArea](https://github.com/nilooy/geminichatui/assets/32486682/dfde7c9a-7201-4a95-adb9-4cedbd45006e)
+
+
 ## Run Locally
 
 First, run the development server:
 
-Create `.env.local` file or rename `env.sample` to `env.local` and
-add the
-- GEMINI_API_KEY
+- Create `.env.local` file or rename `env.sample` to `env.local` and
+- add the `GEMINI_API_KEY`
 
-Install all the dependecies
+- Install all the dependecies
+- 
 ```bash
 yarn
 ```
-Run the server
+- Run the server
+- 
 ```bash
 yarn dev
 ```
@@ -34,10 +40,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 This project is built with the following technologies:
 
-- ![Next.js](https://simpleicons.org/icons/next-dot-js.svg) **Next.js** - A React framework for building server-side
-- ![shadcnui](https://simpleicons.org/icons/shadcnui.svg) **shadcn/ui** - A Minimalistic UI Library
-- ![Tailwindcss](https://simpleicons.org/icons/tailwindcss.svg) **Tailwindcss** - A utility-first CSS framework
-- ![WatermelonDB](https://raw.githubusercontent.com/Nozbe/WatermelonDB/master/assets/logo.png) **WatermelonDB** - Offline First Database
+![Group 6](https://github.com/nilooy/geminichatui/assets/32486682/1dc105e9-6609-45e7-9723-cbda1bb62766)
+
 
 
 ## Deploy on Vercel
