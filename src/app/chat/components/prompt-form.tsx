@@ -13,6 +13,7 @@ import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
 import { cn } from "@/lib/utils";
 import { Icon } from "@/components/ui/icons";
 import LoadingDots from "@/components/ui/loading-dots";
+import { TypeAnimation } from "react-type-animation";
 
 export interface PromptProps
   extends Pick<UseChatHelpers, "input" | "setInput"> {
@@ -36,6 +37,8 @@ export function PromptForm({
     }
   }, []);
 
+  const loading = responseIsStarted || isLoading;
+
   return (
     <form
       onSubmit={async (e) => {
@@ -44,7 +47,7 @@ export function PromptForm({
         if (!input?.trim()) {
           return;
         }
-        // setInput("");
+        setInput("");
         try {
           await onSubmit(input);
         } catch (e) {
@@ -60,19 +63,24 @@ export function PromptForm({
             ref={inputRef}
             tabIndex={0}
             onKeyDown={onKeyDown}
-            disabled={responseIsStarted}
+            disabled={loading}
             rows={1}
             value={input}
             onChange={(e) => {
               setInput(e.target.value);
             }}
-            placeholder={isLoading ? "" : "Ask here"}
+            placeholder={loading ? "" : "Ask here"}
             spellCheck={false}
             className="w-full px-4 py-3 resize-none rounded-lg
             border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           />
-          {responseIsStarted && (
-            <div className="absolute top-0 bottom-0 left-[3px] flex flex-col justify-center">
+          {loading && (
+            <div className="absolute top-0 bottom-0 left-[3px] flex items-center gap-4 ml-4 justify-center">
+              <TypeAnimation
+                sequence={["Ai is thinking"]}
+                speed={40}
+                repeat={false}
+              />
               <LoadingDots />
             </div>
           )}

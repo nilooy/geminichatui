@@ -46,6 +46,7 @@ export default function ChatUi({
   const { chat_id, folder_id } = useParams();
 
   const [conversations, setConversations] = useState([]);
+  console.log({ conversations, ss: 2 });
   const isDataLoading = false;
 
   const [responseIsStarted, setResponseIsStarted] = React.useState(false);
@@ -72,6 +73,7 @@ export default function ChatUi({
     isLoading,
     input,
     setInput,
+    setMessages,
   } = useChat({
     api: `/chat/${folder_id}/${chat_id}/ai`,
     id: conversationId,
@@ -92,7 +94,6 @@ export default function ChatUi({
     },
     async onFinish(message) {
       setResponseIsStarted(false);
-      console.log({ message });
       await saveMessage(message.content);
     },
     onError() {
@@ -105,7 +106,6 @@ export default function ChatUi({
   });
 
   const handleSuccessResponse = () => {
-    setInput("");
     setResponseIsStarted(true);
   };
 
@@ -183,12 +183,13 @@ export default function ChatUi({
 
       <ChatPanel
         chat_id={chat_id}
-        isLoading={isLoading}
         responseIsStarted={responseIsStarted}
+        setResponseIsStarted={setResponseIsStarted}
         stop={stop}
         append={append}
         reload={reload}
         messages={messages}
+        conversations={conversations}
         input={input}
         setInput={setInput}
         chatArea={chatArea}

@@ -15,6 +15,14 @@ import { DEFAULT_FOLDER_NAME } from "@/lib/constants";
 import { useDraggable, useDroppable } from "@dnd-kit/core";
 import { ConversationController } from "@/lib/conversations/controller";
 import { truncateText } from "@/lib/chats/helpers";
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import ChatDeleteModal from "@/app/chat/components/chat-layout/chat-delete";
+import FolderDeleteModal from "@/app/chat/components/chat-layout/folder-delete";
 
 const ChatLink = ({ chat, currentChatId, database }) => {
   const {
@@ -49,29 +57,38 @@ const ChatLink = ({ chat, currentChatId, database }) => {
   }, [database, chat]);
 
   return (
-    <div
-      className={cn(
-        buttonVariants({
-          variant: currentChatId === chat.id ? "default" : "outline",
-          size: "lg",
-        }),
-        "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-        "justify-start w-full border px-2"
-      )}
-      ref={setNodeRefDrag}
-      style={dropStyle}
-    >
-      <button {...listeners} {...attributes}>
-        <GripVertical className="w-4 h-4 mr-2" />
-      </button>
-      <Link
-        href={`/chat/${chat.folderId}/${chat.id}`}
-        className="flex-1 flex flex-col"
-      >
-        <span className="mr-2 h-4 w-4">{truncateText(chat.name, 16)}</span>
-        <small>{truncateText(lastConv, 20)}</small>
-      </Link>
-    </div>
+    <ContextMenu>
+      <ContextMenuTrigger>
+        <div
+          className={cn(
+            buttonVariants({
+              variant: currentChatId === chat.id ? "default" : "outline",
+              size: "lg",
+            }),
+            "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
+            "justify-start w-full border px-2"
+          )}
+          ref={setNodeRefDrag}
+          style={dropStyle}
+        >
+          <button {...listeners} {...attributes}>
+            <GripVertical className="w-4 h-4 mr-2" />
+          </button>
+          <Link
+            href={`/chat/${chat.folderId}/${chat.id}`}
+            className="flex-1 flex flex-col"
+          >
+            <span className="mr-2 h-4 w-4">{truncateText(chat.name, 16)}</span>
+            <small>{truncateText(lastConv, 20)}</small>
+          </Link>
+        </div>
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem asChild>
+          <ChatDeleteModal chat={chat} />
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
   );
 };
 
@@ -114,30 +131,40 @@ const ChatNavItem: React.FC<{ folder: Folder; activeId: string }> = ({
         "bg-gray-200": isOver,
       })}
     >
-      <AccordianTriggerOrDiv
-        className={cn(
-          buttonVariants({ variant: "ghost", size: "sm" }),
-          "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-          "justify-between !no-underline w-full flex-start"
-        )}
-      >
-        <div className="flex items-center">
-          {defaultFolder ? (
-            <ArrowDownWideNarrow className="h-4 w-4 mr-2" />
-          ) : (
-            <FolderIcon className="h-4 w-4 mr-2" />
-          )}
-          {folder.name}
-        </div>
-        <span
-          className={cn(
-            "ml-auto",
-            "bg-primary text-background text-xs px-2 py-1 rounded-md"
-          )}
-        >
-          {chats?.length || 0}
-        </span>
-      </AccordianTriggerOrDiv>
+      <ContextMenu>
+        <ContextMenuTrigger>
+          <AccordianTriggerOrDiv
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "sm" }),
+              "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
+              "justify-between !no-underline w-full flex-start"
+            )}
+          >
+            <div className="flex items-center">
+              {defaultFolder ? (
+                <ArrowDownWideNarrow className="h-4 w-4 mr-2" />
+              ) : (
+                <FolderIcon className="h-4 w-4 mr-2" />
+              )}
+              {folder.name}
+            </div>
+            <span
+              className={cn(
+                "ml-auto",
+                "bg-primary text-background text-xs px-2 py-1 rounded-md"
+              )}
+            >
+              {chats?.length || 0}
+            </span>
+          </AccordianTriggerOrDiv>
+        </ContextMenuTrigger>
+        <ContextMenuContent>
+          <ContextMenuItem asChild>
+            <FolderDeleteModal folder={folder} />
+          </ContextMenuItem>
+        </ContextMenuContent>
+      </ContextMenu>
+
       <AccordionContentOrDiv
         data-state={"open"}
         contentwrapperclassname="!overflow-visible"

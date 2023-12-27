@@ -7,7 +7,7 @@ import { CodeBlock } from "./codeblock";
 import { MemoizedReactMarkdown } from "./markdown";
 import { Icon } from "@/components/ui/icons";
 import React from "react";
-import { TypeAnimation } from "react-type-animation";
+import CopyButton from "@/components/ui/copy-button";
 
 export interface ChatMessageProps {
   message: Message;
@@ -15,7 +15,7 @@ export interface ChatMessageProps {
 }
 
 const AnimateText = ({ text, cursor }) => (
-  // <TypeAnimation cursor={cursor} sequence={[text]} speed={99} repeat={false} />
+  // TODO: <TypeAnimation cursor={cursor} sequence={[text]} speed={99} repeat={false} />
   <p className="relative before:absolute before:inset-0 before:animate-typewriter">
     {text}
   </p>
@@ -114,17 +114,20 @@ export function ChatMessage({
           </MemoizedReactMarkdown>
         )}
       </div>
-      {!!message.createdAt && (
-        <small
-          className={cn("opacity-70 text-[10px]", {
-            "self-end": isUser,
-          })}
-        >
-          {formatDistance(message.createdAt, new Date(), {
-            addSuffix: true,
-          })}
-        </small>
-      )}
+      <div className="flex gap-2 items-center">
+        {!!message.createdAt && (
+          <small
+            className={cn("opacity-70 text-[10px]", {
+              "self-end": isUser,
+            })}
+          >
+            {formatDistance(message.createdAt, new Date(), {
+              addSuffix: true,
+            })}
+          </small>
+        )}
+        <CopyButton text={message.content} />
+      </div>
     </div>
   );
 }
